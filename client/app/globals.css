@@ -1,0 +1,208 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Font mapping */
+  --font-inter: var(--font-inter);
+  --font-manrope: var(--font-manrope);
+
+  /* Map shadcn tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand colors */
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-light: var(--brand-green-light);
+  --color-brand-green-dark: var(--brand-green-dark);
+  --color-brand-mint: var(--brand-mint);
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-gray: var(--brand-gray);
+  --color-brand-orange: var(--brand-orange);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --brand-green: #1c9876;
+  --brand-green-light: #5cd6ba;
+  --brand-green-dark: #1b9876;
+  --brand-mint: #deedea;
+  --brand-bg: #f0f2f1;
+  --brand-dark: #171717;
+  --brand-gray: #595959;
+  --brand-orange: #fbb57b;
+
+  --primary: var(--brand-green);
+  --primary-foreground: white;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+
+  --accent: var(--brand-mint);
+  --accent-foreground: var(--brand-dark);
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: var(--brand-green);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+
+  --primary: var(--brand-green-light);
+  --primary-foreground: black;
+
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+
+  --accent: var(--brand-green-dark);
+  --accent-foreground: white;
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--brand-green-light);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+    scroll-behavior: smooth;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-manrope;
+  }
+}
+
+/* ------------------------------------------------ */
+/* CUSTOM ANIMATIONS                               */
+/* ------------------------------------------------ */
+
+@layer utilities {
+  @keyframes needleOscillate {
+    0% {
+      transform: rotate(-75deg);
+    }
+    30% {
+      transform: rotate(-10deg);
+    }
+    55% {
+      transform: rotate(25deg);
+    }
+    75% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(-75deg);
+    }
+  }
+
+  .animate-needle {
+    animation: needleOscillate 3s ease-in-out infinite;
+  }
+
+  @keyframes progressFill {
+    0% {
+      width: 0%;
+    }
+    40% {
+      width: 64%;
+    }
+    70% {
+      width: 64%;
+    }
+    85% {
+      width: 78%;
+    }
+    100% {
+      width: 0%;
+    }
+  }
+
+  .animate-progress {
+    animation: progressFill 4s ease-in-out infinite;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.65s ease both;
+  }
+
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  .delay-300 {
+    animation-delay: 0.3s;
+  }
+}
