@@ -57,10 +57,10 @@ export default function HowItWorks() {
             <path
               d="M1.00022 134.145C76.4647 11.8866 323.751 -62.429 523.641 74.6965C727.81 236.425 904.879 220.585 1056.27 74.8248"
               stroke="#1C9876"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-dasharray="2 10"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="2 10"
             />
           </svg>
         </div>

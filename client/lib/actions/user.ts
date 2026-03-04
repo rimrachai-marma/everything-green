@@ -7,7 +7,7 @@ import { EmailFormData, ProfileFormData } from "../schemas/user";
 
 const API_BASE_URL = serverEnv.API_BASE_URL;
 
-export async function getProfile(): Promise<QueryState<User> | null> {
+export async function getProfile(): Promise<QueryState<User>> {
   const token = await getAuthToken();
   try {
     const response = await fetch(`${API_BASE_URL}/user/profile`, {
@@ -20,7 +20,10 @@ export async function getProfile(): Promise<QueryState<User> | null> {
 
     return await response.json();
   } catch {
-    return null;
+    return {
+      status: "error",
+      message: "An unexpected error occurred",
+    };
   }
 }
 

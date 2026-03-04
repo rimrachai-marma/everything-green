@@ -31,7 +31,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${manrope.variable} antialiased flex flex-col min-h-screen`}>
-        <Navbar user={result?.data ?? null} />
+        <Navbar user={result.status === "success" ? result.data : null} />
         {children}
         <Footer />
       </body>

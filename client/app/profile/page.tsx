@@ -4,7 +4,7 @@ import { getProfile } from "@/lib/actions/user";
 export default async function ProfilePage() {
   const result = await getProfile();
 
-  if (!result?.data) throw new Error("Something went wrong!");
+  if (result.status === "error") throw new Error(result.message);
 
   return <ProfileClient user={result.data} />;
 }

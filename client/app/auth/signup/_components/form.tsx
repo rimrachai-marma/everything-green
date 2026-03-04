@@ -49,7 +49,7 @@ export const Form: React.FC = () => {
 
   React.useEffect(() => {
     if (state?.status === "success") router.push(redirectTo ?? "/");
-  });
+  }, [state, router, redirectTo]);
 
   const onSubmit = (data: RegisterFormData) => {
     React.startTransition(() => {
