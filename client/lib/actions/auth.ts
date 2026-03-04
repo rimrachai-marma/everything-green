@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-import { ActionState, User, UserWithToken } from "@/types";
+import { MutationState, User, UserWithToken } from "@/types";
 import { LoginFormData, PasswordFormData, RegisterFormData } from "../schemas/auth";
 import { serverEnv } from "@/data/env";
 import { redirect } from "next/navigation";
@@ -11,9 +11,9 @@ const API_BASE_URL = serverEnv.API_BASE_URL;
 const TOKEN_COOKIE_NAME = serverEnv.TOKEN_COOKIE_NAME || "access_token";
 
 export async function signupAction(
-  _: ActionState<UserWithToken> | null,
+  _: MutationState<UserWithToken> | null,
   formData: RegisterFormData,
-): Promise<ActionState<UserWithToken> | null> {
+): Promise<MutationState<UserWithToken> | null> {
   try {
     const response = await fetch(`${API_BASE_URL}/auth/signup`, {
       method: "POST",
@@ -44,9 +44,9 @@ export async function signupAction(
 }
 
 export async function loginAction(
-  _: ActionState<UserWithToken> | null,
+  _: MutationState<UserWithToken> | null,
   formData: LoginFormData,
-): Promise<ActionState<UserWithToken> | null> {
+): Promise<MutationState<UserWithToken> | null> {
   try {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: "POST",
@@ -93,7 +93,10 @@ export async function logout() {
   redirect("/auth/login");
 }
 
-export async function changePassword(state: ActionState | null, data: PasswordFormData): Promise<ActionState | null> {
+export async function changePassword(
+  state: MutationState | null,
+  data: PasswordFormData,
+): Promise<MutationState | null> {
   const token = await getAuthToken();
   try {
     const response = await fetch(`${API_BASE_URL}/auth/change-password`, {

@@ -1,19 +1,36 @@
 export * from "./user";
-
-export interface ApiResponse<T> {
-  status: "success" | "error";
-  message: string;
-  data?: T | null;
+export interface Pagination {
+  page: number;
+  pages: number;
+  perPage: number;
+  total: number;
 }
 
-export type ActionState<T = null> =
+export interface Meta {
+  timestamp: string;
+  pagination?: Pagination;
+}
+
+export type QueryState<T> =
   | {
       status: "success";
       message: string;
-      data?: T | null;
+      data: T;
+      meta?: Meta;
     }
   | {
       status: "error";
       message: string;
-      errors?: Record<string, string[]> | null;
+    };
+
+export type MutationState<T = null> =
+  | {
+      status: "success";
+      message: string;
+      data?: T;
+    }
+  | {
+      status: "error";
+      message: string;
+      errors?: Record<string, string[]>;
     };

@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler";
 import { AuthService } from "../services/auth";
 import { db } from "../config/db/database";
+import { sendSuccessMutation } from "../utilities/response";
 
 export class AuthController {
   private authService: AuthService;
@@ -32,6 +33,8 @@ export class AuthController {
       message: "Registration successful!",
       data: user,
     });
+
+    sendSuccessMutation(res, "Registration successful!", user, 201);
   });
 
   login = asyncHandler(async (req: Request, res: Response) => {
@@ -46,11 +49,7 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.json({
-      status: "success",
-      message: "Logged in successfully",
-      data: user,
-    });
+    sendSuccessMutation(res, "Logged in successfully", user);
   });
 
   logout = asyncHandler(async (_: Request, res: Response) => {
@@ -60,15 +59,14 @@ export class AuthController {
       status: "success",
       message: "Logged out successfully",
     });
+
+    sendSuccessMutation(res, "Logged out successfully", undefined, 204);
   });
 
   changePassword = asyncHandler(async (req: Request, res: Response) => {
     const { currentPassword, newPassword } = req.body;
     await this.authService.changePassword(req.user!.id, { oldPassword: currentPassword, newPassword });
 
-    res.json({
-      status: "success",
-      message: "Password changed successfully",
-    });
+    sendSuccessMutation(res, "Password changed successfully");
   });
 }

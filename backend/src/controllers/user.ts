@@ -4,6 +4,7 @@ import { db } from "../config/db/database";
 import asyncHandler from "../middleware/asyncHandler";
 import { UserService } from "../services/user";
 import type { UpdateUser } from "../types";
+import { sendSuccessMutation, sendSuccessQuery } from "../utilities/response";
 
 export class UserController {
   private userService: UserService;
@@ -15,11 +16,7 @@ export class UserController {
   profile = asyncHandler(async (req: Request, res: Response) => {
     const user = await this.userService.profile(req.user!.id);
 
-    res.json({
-      status: "success",
-      message: "User profile retrieved successfully",
-      data: user,
-    });
+    sendSuccessQuery(res, "User profile retrieved successfully", user);
   });
 
   updateProfile = asyncHandler(async (req: Request, res: Response) => {
@@ -35,19 +32,12 @@ export class UserController {
 
     const updatedUser = await this.userService.updateProfile(req.user!.id, updates);
 
-    res.json({
-      status: "success",
-      message: "User profile updated successfully",
-      data: updatedUser,
-    });
+    sendSuccessMutation(res, "User profile updated successfully", updatedUser);
   });
 
   deleteAccount = asyncHandler(async (req: Request, res: Response) => {
     await this.userService.deleteAccount(req.user!.id);
 
-    res.json({
-      status: "success",
-      message: "Account deleted successfully",
-    });
+    sendSuccessMutation(res, "Account deleted successfully", undefined, 204);
   });
 }

@@ -12,8 +12,6 @@ const authRoutes = ["/auth/login", "/auth/signup"];
 const publicRoutes = ["/"];
 
 export async function proxy(req: NextRequest) {
-  console.log("FROM PROXY");
-
   const { pathname } = req.nextUrl;
 
   const isProtectedRoute = protectedRoutes.includes(pathname);
