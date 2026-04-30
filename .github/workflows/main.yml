@@ -1,0 +1,41 @@
+name: Release — Build & Push (Prod)
+
+on:
+  push:
+    tags:
+      - "v*" # triggers on v1.0.0, v1.2.0, v2.0.0, etc.
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # GITHUB_REF = refs/tags/v1.2.0
+      # VERSION    = v1.2.0
+      - name: Get version from tag
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Extract release notes from CHANGELOG.md
+        run: |
+          awk "/^## $VERSION/{found=1; next} /^## v/{found=0} found" \
+            CHANGELOG.md > release_notes.txt
+
+          if [ ! -s release_notes.txt ]; then
+            echo "❌ No entry for $VERSION found in CHANGELOG.md"
+            echo "Add an entry before tagging a release."
+            exit 1
+          fi
+
+          echo "✅ Release notes extracted:"
+          cat release_notes.txt
+
+      - name: Create GitHub Release
+        run: |
+          gh release create ${{ env.VERSION }} \
+            --title "Release ${{ env.VERSION }}" \
+            --notes-file release_notes.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
