@@ -38,4 +38,4 @@ jobs:
             --title "Release ${{ env.VERSION }}" \
             --notes-file release_notes.txt
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TOKEN }}
